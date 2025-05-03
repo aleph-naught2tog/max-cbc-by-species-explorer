@@ -10,7 +10,7 @@ let birdIndex = 0;
 let temps = [];
 
 function preload() {
-  loadCBCData('CBC_WIMA_1947-2024.csv');
+  loadCBCData('/data/CBC_WIMA_1947-2024.csv');
 }
 
 function setup() {
