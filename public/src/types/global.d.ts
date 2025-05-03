@@ -83,7 +83,9 @@ type SpreadableColorValue = RGBColor | HSBColor | HSLColor;
 
 declare function push(): void;
 declare function pop(): void;
+declare const POINTS = 'points';
 declare function beginShape(): void;
+declare function beginShape(SHAPE_TYPE: string): void;
 declare function endShape(): void;
 
 declare function noFill(): void;
@@ -156,6 +158,30 @@ declare function circle(
   centerX: number,
   centerY: number,
   diameter: number
+): void;
+
+declare function rect(
+  x: number,
+  y: number,
+  width: number,
+  height: number
+): void;
+declare function rect(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  cornerRadius: number
+): void;
+declare function rect(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  topLeftRadius: number,
+  topRightRadius: number,
+  bottomRightRadius: number,
+  bottomLeftRadius: number
 ): void;
 
 declare function text(
@@ -261,7 +287,11 @@ interface P5Element {
   child(node: Node): void;
   child(element: P5Element): void;
 
-  position(x: number, y: number, cssPosition?: CssPosition): Point;
+  position(
+    x: number,
+    y: number,
+    cssPosition?: CssPosition
+  ): { x: number; y: number };
 
   html(innerHtml: string, append?: boolean): void;
 }
@@ -297,6 +327,8 @@ declare function lerpColor(
 ): P5Color;
 
 declare interface P5TableRow {
+  arr: (string | number)[];
+
   set(columnSpecifier: string | number, value: string | number): void;
   setNum(columnSpecifier: string | number, value: number): void;
   setString(columnSpecifier: string | number, value: string): void;
