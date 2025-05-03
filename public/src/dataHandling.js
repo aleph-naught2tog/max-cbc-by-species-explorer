@@ -1,9 +1,21 @@
+let birdIndex = 0;
+
+let temps = [];
+
+/**
+ *
+ * @param {string} _url
+ */
 function loadCBCData(_url) {
   loadTable(_url, onDataLoaded);
 }
 
+/**
+ *
+ * @param {P5Table} _data
+ */
 function onDataLoaded(_data) {
-  countData = processCBCData(_data);
+  countData = processCBCData(/** @type {TypedP5Table<string>}*/ (_data));
 
   //populate a weather array
   for (let i = 0; i < countData.weather.getRowCount(); i++) {
@@ -49,11 +61,18 @@ participants     "CountYear,FirstName,LastName"
 ```
 */
 
+/**
+ *
+ * @param {TypedP5Table<string>} _data
+ * @returns {CountData} the processed data
+ */
 function processCBCData(_data) {
   //set the properties of the count
   //L.I.: Brooklyn,NYBR,40.6160370000/-73.9448350000
   let details = _data.getRow(1);
-  let count = {
+
+  /** @type {BaseCountData} */
+  let count = ({
     name: details.get(0),
     code: details.get(1),
     latLon: {
@@ -62,9 +81,10 @@ function processCBCData(_data) {
     },
     birdMap: {},
     birdList: [],
-  };
+  });
 
   //Go through the data and create a series of Table objects
+  /** @type {Array<CountDataTableKeys>} */
   let order = [
     'weather',
     'effort',
@@ -96,6 +116,7 @@ function processCBCData(_data) {
         //console.log("SET COLUMN:" + colNames[j]);
         table.addColumn(colNames[j]);
       }
+
       count[order[tcount]] = table;
     } else if (row.arr.join('').indexOf('CountYear') != -1) {
       table = null;
@@ -125,5 +146,5 @@ function processCBCData(_data) {
     }
   }
 
-  return count;
+  return /** @type {CountData} */ (count);
 }
