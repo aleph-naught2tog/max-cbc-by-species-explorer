@@ -374,6 +374,23 @@ declare function textFont(fontName: string): void;
 declare function int(val: string | number | boolean): number;
 declare function int(arr: Array<string | number | boolean>): Array<number>;
 
+interface P5Dropdown extends P5Element {
+  option(valueAndName: string): void;
+  option(value: string, label: string): void;
+
+  value(): string;
+
+  selected(): string;
+  selected(defaultValue: string): void;
+}
+
+interface P5Radio extends P5Dropdown {}
+
+declare function createSelect(): P5Dropdown;
+
+declare function createRadio(): P5Radio;
+declare function createRadio(name: string): P5Radio;
+
 //// UTILS------
 
 declare interface TypedP5TableRow<T = string> {
