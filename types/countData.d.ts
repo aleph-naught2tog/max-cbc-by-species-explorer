@@ -1,14 +1,17 @@
 type CommonName = string;
 type ScientificName = string;
 type FloatAsString = string;
-type AbsoluteCountYear = number;
+type AbsoluteCountYear = string;
 
 type BirdMap = Record<
   ScientificName,
-  Record<AbsoluteCountYear, { howMany: number; numberByPartyHours: number }>
+  Record<
+    AbsoluteCountYear,
+    { howMany: number; numberByPartyHours: number }
+  >
 >;
 
-interface CountData {
+interface BaseCountData {
   /**
    * The name of the area
    */
@@ -19,11 +22,17 @@ interface CountData {
   code: string;
   birdList: CommonName[];
   birdMap: BirdMap;
-  checklist: P5Table;
-  compilers: P5Table;
-  effort: P5Table;
   latLon: { lat: FloatAsString; lon: FloatAsString };
-  orgs: P5Table;
-  participants: P5Table;
-  weather: P5Table;
+  checklist?: P5Table;
+  compilers?: P5Table;
+  effort?: P5Table;
+  orgs?: P5Table;
+  participants?: P5Table;
+  weather?: P5Table;
 }
+
+type CountData = Required<BaseCountData>;
+
+type TableCountData = Omit<CountData, 'name' | 'code' | 'birdList' | 'birdMap' | 'latLon'>;
+
+type CountDataTableKeys = keyof TableCountData;

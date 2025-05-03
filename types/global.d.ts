@@ -1,6 +1,13 @@
 /**
  * Note: this is NOT exhaustive. It mostly just is what has been used so far.
  */
+declare const p5: P5Instance;
+
+interface P5Instance {
+  Table: {
+    new (rows?: Array<P5TableRow>): P5Table;
+  };
+}
 
 interface P5Color {
   toString(): string;
@@ -185,7 +192,7 @@ declare function rect(
 ): void;
 
 declare function text(
-  str: string,
+  val: string | Object | Array<any> | number | boolean,
   x_bottomLeftCorner: number,
   y_bottomLeftCorner: number,
   maxWidth?: number,
@@ -342,6 +349,8 @@ declare interface P5Table {
   columns: string[];
   rows: P5TableRow[];
 
+  addColumn(title?: string): void;
+
   addRow(): P5TableRow;
   addRow(row: P5TableRow): P5TableRow;
 
@@ -362,7 +371,37 @@ declare function createElement(tagName: string, content?: string): P5Element;
 declare function textSize(size: number): void;
 declare function textFont(fontName: string): void;
 
-declare function int(str: string): number;
-declare function int(num: number): number;
-declare function int(bool: boolean): 1;
+declare function int(val: string | number | boolean): number;
 declare function int(arr: Array<string | number | boolean>): Array<number>;
+
+//// UTILS------
+
+declare interface TypedP5TableRow<T = string> {
+  arr: T[];
+
+  set(columnSpecifier: string | number, value: T): void;
+  setNum(columnSpecifier: string | number, value: number): void;
+  setString(columnSpecifier: string | number, value: string): void;
+
+  get(columnSpecifier: string | number): T;
+  getNum(columnSpecifier: string | number): number;
+  getString(columnSpecifier: string | number): string;
+}
+
+declare interface TypedP5Table<T = string> {
+  columns: string[];
+  rows: TypedP5TableRow<T>[];
+
+  addRow(): TypedP5TableRow<T>;
+  addRow(row: P5TableRow): TypedP5TableRow<T>;
+
+  removeRow(id: number): void;
+
+  get(rowIndex: number, columnId: string | number): string | number;
+
+  getRow(id: number): TypedP5TableRow<T>;
+  getRows(): TypedP5TableRow<T>[];
+
+  getColumnCount(): number;
+  getRowCount(): number;
+}

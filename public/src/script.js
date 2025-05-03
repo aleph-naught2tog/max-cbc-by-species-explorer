@@ -33,13 +33,14 @@ function drawChart() {
   text(BIRD + ' : ' + START_YEAR + ' - ' + END_YEAR, 50, 80);
 
   //Calculate the max count so we can color that bar orange and size the rest of the bars
+  /** @type {number[]} */
   let nums = [];
 
   for (let i = START_YEAR; i <= END_YEAR; i++) {
     try {
       let num = countData.birdMap[BIRD][i].howMany;
-      if (num != 'cw') {
-        nums.push(parseInt(num));
+      if (!isNaN(num)) {
+        nums.push(num);
       }
     } catch (_e) {}
   }
