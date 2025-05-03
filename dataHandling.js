@@ -9,23 +9,19 @@ function onDataLoaded(_data) {
   for (let i = 0; i < countData.weather.getRowCount(); i++) {
     let year = countData.weather.getRow(i).get('CountYear');
     let temp = countData.weather.getRow(i).get('LowTemp');
+
     temps[1900 + int(year)] = temp;
   }
 }
 
-/*
-
-Christmas Bird Count Data Formatter
-
-(Requires p5.js)
-
-The data that comes from the Audubon archive for the CBC is in an... interesting format.
-It's definitely meant to be looked at and not computed on.
-
-Here we make a function that parses the data into a clean(ish) object:
-
-(I am not responsible for the header names)
-
+/**
+ * Christmas Bird Count Data Formatter (Requires p5.js)
+ *
+ * The data that comes from the Audubon archive for the CBC is in an... interesting format. It's definitely meant to be looked at and not computed on.
+ *
+ * Here we make a function that parses the data into a clean(ish) object: (I am not responsible for the header names)
+ *
+ * ```
 {
   name: 'L.I.: Brooklyn',
   code: 'NYBR',
@@ -39,17 +35,18 @@ Here we make a function that parses the data into a clean(ish) object:
   birdMap: a dictionary of bird counts, which can be retrieved by [common name][year], returning an object {howMany:NUM, numberByPartyHours:NUM},
   birdList: an array of bird common names
 }
+  ```
 
-Headers for table objects are as follows:
+ * Headers for table objects are as follows:
 
+```
 weather          "CountYear,LowTemp,HighTemp,AMCloud,PMClouds,AMRain,PMRain,AMSnow,PMSnow",
 effort           "CountYear,CountDate,NumParticipants,NumHours,NumSpecies",
 orgs             "CountYear,SponsoringOrg",
 checklist        "CommonName,CountYear,HowMany,NumberByPartyHours,Flags",
 compilers        "CountYear,FirstName,LastName,Email,IsPrimary",
 participants     "CountYear,FirstName,LastName"
-
-
+```
 */
 
 function processCBCData(_data) {
@@ -76,6 +73,7 @@ function processCBCData(_data) {
     'compilers',
     'participants',
   ];
+
   let cleanHeaders = [
     'CountYear,LowTemp,HighTemp,AMCloud,PMClouds,AMRain,PMRain,AMSnow,PMSnow',
     'CountYear,CountDate,NumParticipants,NumHours,NumSpecies',
@@ -84,8 +82,10 @@ function processCBCData(_data) {
     'CountYear,FirstName,LastName,Email,IsPrimary',
     'CountYear,FirstName,LastName',
   ];
+
   let tcount = 0;
   let table;
+
   for (let i = 3; i < _data.getRowCount(); i++) {
     let row = _data.getRow(i);
     if (!table) {
@@ -111,15 +111,16 @@ function processCBCData(_data) {
       if (tcount == 3) {
         let birdName = row.get(0).split(/\r?\n/)[0];
         let year = row.get(1).split(/\r?\n/)[0].split(' ')[0];
+
         if (!count.birdMap[birdName]) {
           count.birdMap[birdName] = {};
           count.birdList.push(birdName);
         }
+
         count.birdMap[birdName][year] = {
           howMany: parseInt(row.get(2)),
           numberByPartyHours: parseFloat(row.get(3)),
         };
-        //let
       }
     }
   }
