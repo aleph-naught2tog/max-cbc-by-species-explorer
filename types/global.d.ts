@@ -361,3 +361,8 @@ declare function createElement(tagName: string, content?: string): P5Element;
 
 declare function textSize(size: number): void;
 declare function textFont(fontName: string): void;
+
+declare function int(str: string): number;
+declare function int(num: number): number;
+declare function int(bool: boolean): 1;
+declare function int(arr: Array<string | number | boolean>): Array<number>;

@@ -1,7 +1,19 @@
+let birdIndex = 0;
+
+let temps = [];
+
+/**
+ *
+ * @param {string} _url
+ */
 function loadCBCData(_url) {
   loadTable(_url, onDataLoaded);
 }
 
+/**
+ *
+ * @param {P5Table} _data
+ */
 function onDataLoaded(_data) {
   countData = processCBCData(_data);
 
@@ -49,6 +61,11 @@ participants     "CountYear,FirstName,LastName"
 ```
 */
 
+/**
+ *
+ * @param {P5Table} _data
+ * @returns {CountData} the processed data
+ */
 function processCBCData(_data) {
   //set the properties of the count
   //L.I.: Brooklyn,NYBR,40.6160370000/-73.9448350000
