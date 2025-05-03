@@ -7,12 +7,50 @@ function onDataLoaded(_data) {
 
   //populate a weather array
   for (let i = 0; i < countData.weather.getRowCount(); i++) {
-    let year = countData.weather.getRow(i).get("CountYear");
-    console.debug({ countYear: year, year: 1900 + int(year) - 1 })
-    let temp = countData.weather.getRow(i).get("LowTemp");
+    let year = countData.weather.getRow(i).get('CountYear');
+    let temp = countData.weather.getRow(i).get('LowTemp');
     temps[1900 + int(year)] = temp;
   }
 }
+
+/*
+
+Christmas Bird Count Data Formatter
+
+(Requires p5.js)
+
+The data that comes from the Audubon archive for the CBC is in an... interesting format.
+It's definitely meant to be looked at and not computed on.
+
+Here we make a function that parses the data into a clean(ish) object:
+
+(I am not responsible for the header names)
+
+{
+  name: 'L.I.: Brooklyn',
+  code: 'NYBR',
+  latLon: {lat: '40.6160370000', lon: '40.6160370000'},
+  weather: Table object for weather,
+  effort: Table object for count totals,
+  orgs: Table object for sponsoring orgs,
+  checklist: Table with bird data,
+  compilers: Table with compiler info,
+  participants: Table with participant info,
+  birdMap: a dictionary of bird counts, which can be retrieved by [common name][year], returning an object {howMany:NUM, numberByPartyHours:NUM},
+  birdList: an array of bird common names
+}
+
+Headers for table objects are as follows:
+
+weather          "CountYear,LowTemp,HighTemp,AMCloud,PMClouds,AMRain,PMRain,AMSnow,PMSnow",
+effort           "CountYear,CountDate,NumParticipants,NumHours,NumSpecies",
+orgs             "CountYear,SponsoringOrg",
+checklist        "CommonName,CountYear,HowMany,NumberByPartyHours,Flags",
+compilers        "CountYear,FirstName,LastName,Email,IsPrimary",
+participants     "CountYear,FirstName,LastName"
+
+
+*/
 
 function processCBCData(_data) {
   //set the properties of the count
@@ -22,8 +60,8 @@ function processCBCData(_data) {
     name: details.get(0),
     code: details.get(1),
     latLon: {
-      lat: details.get(2).split("/")[0],
-      lon: details.get(2).split("/")[0],
+      lat: details.get(2).split('/')[0],
+      lon: details.get(2).split('/')[0],
     },
     birdMap: {},
     birdList: [],
@@ -31,20 +69,20 @@ function processCBCData(_data) {
 
   //Go through the data and create a series of Table objects
   let order = [
-    "weather",
-    "effort",
-    "orgs",
-    "checklist",
-    "compilers",
-    "participants",
+    'weather',
+    'effort',
+    'orgs',
+    'checklist',
+    'compilers',
+    'participants',
   ];
   let cleanHeaders = [
-    "CountYear,LowTemp,HighTemp,AMCloud,PMClouds,AMRain,PMRain,AMSnow,PMSnow",
-    "CountYear,CountDate,NumParticipants,NumHours,NumSpecies",
-    "CountYear,SponsoringOrg",
-    "CommonName,CountYear,HowMany,NumberByPartyHours,Flags",
-    "CountYear,FirstName,LastName,Email,IsPrimary",
-    "CountYear,FirstName,LastName",
+    'CountYear,LowTemp,HighTemp,AMCloud,PMClouds,AMRain,PMRain,AMSnow,PMSnow',
+    'CountYear,CountDate,NumParticipants,NumHours,NumSpecies',
+    'CountYear,SponsoringOrg',
+    'CommonName,CountYear,HowMany,NumberByPartyHours,Flags',
+    'CountYear,FirstName,LastName,Email,IsPrimary',
+    'CountYear,FirstName,LastName',
   ];
   let tcount = 0;
   let table;
@@ -53,13 +91,13 @@ function processCBCData(_data) {
     if (!table) {
       table = new p5.Table();
       //console.log("---");
-      let colNames = cleanHeaders[tcount].split(",");
+      let colNames = cleanHeaders[tcount].split(',');
       for (let j = 0; j < colNames.length; j++) {
         //console.log("SET COLUMN:" + colNames[j]);
         table.addColumn(colNames[j]);
       }
       count[order[tcount]] = table;
-    } else if (row.arr.join("").indexOf("CountYear") != -1) {
+    } else if (row.arr.join('').indexOf('CountYear') != -1) {
       table = null;
       tcount++;
     } else {
@@ -72,7 +110,7 @@ function processCBCData(_data) {
       //If we're in the checklist object, populate the birdmap
       if (tcount == 3) {
         let birdName = row.get(0).split(/\r?\n/)[0];
-        let year = row.get(1).split(/\r?\n/)[0].split(" ")[0];
+        let year = row.get(1).split(/\r?\n/)[0].split(' ')[0];
         if (!count.birdMap[birdName]) {
           count.birdMap[birdName] = {};
           count.birdList.push(birdName);

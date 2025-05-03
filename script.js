@@ -1,47 +1,8 @@
-/*
 
-Christmas Bird Count Data Formatter
-
-(Requires p5.js)
-
-The data that comes from the Audubon archive for the CBC is in an... interesting format.
-It's definitely meant to be looked at and not computed on.
-
-Here we make a function that parses the data into a clean(ish) object:
-
-(I am not responsible for the header names)
-
-{
-  name: 'L.I.: Brooklyn',
-  code: 'NYBR',
-  latLon: {lat: '40.6160370000', lon: '40.6160370000'},
-  weather: Table object for weather,
-  effort: Table object for count totals,
-  orgs: Table object for sponsoring orgs,
-  checklist: Table with bird data,
-  compilers: Table with compiler info,
-  participants: Table with participant info,
-  birdMap: a dictionary of bird counts, which can be retrieved by [common name][year], returning an object {howMany:NUM, numberByPartyHours:NUM},
-  birdList: an array of bird common names
-}
-
-Headers for table objects are as follows:
-
-weather          "CountYear,LowTemp,HighTemp,AMCloud,PMClouds,AMRain,PMRain,AMSnow,PMSnow",
-effort           "CountYear,CountDate,NumParticipants,NumHours,NumSpecies",
-orgs             "CountYear,SponsoringOrg",
-checklist        "CommonName,CountYear,HowMany,NumberByPartyHours,Flags",
-compilers        "CountYear,FirstName,LastName,Email,IsPrimary",
-participants     "CountYear,FirstName,LastName"
-
-
-*/
 
 let countData;
 
 //You can use a name here, otherwise it'll pick a random bird
-//   bird = "American Crow"
-
 let bird = "Black-capped Chickadee";
 let startYear = 1987;
 let endYear = 2023;
@@ -112,5 +73,3 @@ function drawChart() {
     } catch (_e) {}
   }
 }
-
-//Data processing code starts here. I'd normally put this in its own .js file for tidiness
