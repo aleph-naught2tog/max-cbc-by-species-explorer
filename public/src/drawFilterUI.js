@@ -1,3 +1,7 @@
+/**
+ * @param {P5Dropdown} birdSelect
+ * @param {CountData} birdData
+ */
 function populateBirdSelect(birdSelect, birdData) {
   for (const birdName of [...birdData.birdList].sort()) {
     birdSelect.option(birdName);
@@ -5,6 +9,12 @@ function populateBirdSelect(birdSelect, birdData) {
 
   birdSelect.selected('Mallard');
 }
+
+/**
+ * @param {P5Dropdown} yearStartSelect
+ * @param {P5Dropdown} yearEndSelect
+ * @param {CountData} birdData
+ */
 function populateYearSelects(yearStartSelect, yearEndSelect, birdData) {
   const years = Object.keys(birdData.birdMap[birdData.birdList[0]]);
 
@@ -17,6 +27,9 @@ function populateYearSelects(yearStartSelect, yearEndSelect, birdData) {
   yearEndSelect.selected(DEFAULT_END_YEAR.toString());
 }
 
+/**
+ * @param {P5Radio} graphTypeRadioGroup
+ */
 function populateGraphTypeRadios(graphTypeRadioGroup) {
   graphTypeRadioGroup.option('howMany', 'Bird count');
   graphTypeRadioGroup.option('numberByPartyHours', 'By party hours');
@@ -27,11 +40,17 @@ function populateGraphTypeRadios(graphTypeRadioGroup) {
 /**
  * @param {CountData} birdData
  */
-function drawFilterUI(birdData) {
+function createBirdSelect(birdData) {
   birdSelect = createSelect();
   appendElementToDOMContainer(birdSelect, 'species_select_container');
   populateBirdSelect(birdSelect, birdData);
 
+}
+
+/**
+ * @param {CountData} birdData
+ */
+function createYearsSelects(birdData) {
   ////
   yearStartSelect = createSelect();
   appendElementToDOMContainer(yearStartSelect, 'start_year_select_container');
@@ -40,10 +59,13 @@ function drawFilterUI(birdData) {
   appendElementToDOMContainer(yearEndSelect, 'end_year_select_container');
   populateYearSelects(yearStartSelect, yearEndSelect, birdData);
 
-  ////
-  graphTypeRadioGroup = createRadio('graph-type');
-  appendElementToDOMContainer(graphTypeRadioGroup, 'graph_type_container');
-  populateGraphTypeRadios(graphTypeRadioGroup);
+}
+
+function createGraphTypeRadios() {
+    ////
+    graphTypeRadioGroup = createRadio('graph-type');
+    appendElementToDOMContainer(graphTypeRadioGroup, 'graph_type_container');
+    populateGraphTypeRadios(graphTypeRadioGroup);
 }
 
 /**
@@ -69,4 +91,13 @@ function showYearSpan(startYear, endYear) {
 
   startYearElement.innerText = startYear.toString();
   endYearElement.innerText = endYear.toString();
+}
+
+/**
+ * @param {CountData} birdData
+ */
+function drawFilterUI(birdData) {
+  createBirdSelect(birdData);
+  createYearsSelects(birdData);
+  createGraphTypeRadios();
 }
