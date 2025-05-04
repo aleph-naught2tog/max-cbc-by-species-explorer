@@ -14,26 +14,27 @@
     <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
 
     <!-- The website JavaScript file -->
-    <script src="/public/src/domIds.js" defer></script>
+    <script src="/public/src/domUtils.js"></script>
+    <script src="/public/src/drawFilterUI.js" defer></script>
     <script src="/public/src/dataHandling.js" defer></script>
     <script src="/public/src/script.js" defer></script>
   </head>
+
   <body>
     <header>
       <h1>Christmas Bird Count</h1>
       <h2 id="location_name"></h2>
       <h3 id="year_span">
-        <span id="start_year"></span>&ndash;
-        <span id="end_year"></span>
+        <span id="start_year"></span>&ndash;<span id="end_year"></span>
       </h3>
     </header>
 
     <main>
       <ul class="filters">
-        <li id="species_select_container"><select id="species_select"></select></li>
-        <li><select id="start_year_select"></select></li>
-        <li><select id="end_year_select"></select></li>
-        <li id="graph_type_wrapper"></li>
+        <li id="species_select_container"></li>
+        <li id="start_year_select_container"></li>
+        <li id="end_year_select_container"></li>
+        <li id="graph_type_container"></li>
       </ul>
     </main>
 

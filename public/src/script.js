@@ -18,64 +18,23 @@ let yearEndSelect;
 let graphTypeRadioGroup;
 
 function preload() {
-  validateIdPresence();
   loadCBCData('/data/CBC_WIMA_1947-2024.csv');
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight - 100);
+  createCanvas(windowWidth - 100, windowHeight - 100);
 
-  drawSelects(countData);
+  drawFilterUI(countData);
 
-  doWeatherStuff();
+  // doWeatherStuff();
 }
 
 function draw() {
   background('#69F7BE');
 
   if (countData) {
-    // drawChart();
+    drawChart();
   }
-}
-
-/**
- * @param {CountData} birdData
- */
-function drawSelects(birdData) {
-  const s = document.getElementById(DOM_IDS.speciesSelect);
-
-  console.debug({ s })
-  birdSelect = createSelect();
-  birdSelect.parent = document.getElementById('species_select_container')
-
-  for (const birdName of [...birdData.birdList].sort()) {
-    birdSelect.option(birdName);
-  }
-
-  birdSelect.selected('Mallard');
-
-  // ////
-  // yearStartSelect = createSelect(
-  //   document.getElementById(DOM_IDS.startYearSelect)
-  // );
-  // yearEndSelect = createSelect(document.getElementById(DOM_IDS.endYearSelect));
-
-  // const years = Object.keys(birdData.birdMap[birdData.birdList[0]]);
-
-  // for (const year of years) {
-  //   yearStartSelect.option(year);
-  //   yearEndSelect.option(year);
-  // }
-
-  // yearStartSelect.selected(DEFAULT_START_YEAR.toString());
-  // yearEndSelect.selected(DEFAULT_END_YEAR.toString());
-  // ////
-
-  // graphTypeRadioGroup = createRadio(DOM_IDS.graphTypeWrapper, 'graph-type');
-  // graphTypeRadioGroup.option('howMany', 'Bird count');
-  // graphTypeRadioGroup.option('numberByPartyHours', 'By party hours');
-
-  // graphTypeRadioGroup.selected('howMany');
 }
 
 function validateSelects() {
@@ -90,18 +49,15 @@ function validateSelects() {
 //Chart code
 function drawChart() {
   validateSelects();
+  showLocationName(countData.name);
 
-  const currentBird = birdSelect.value();
   const startYear = int(yearStartSelect.value());
   const endYear = int(yearEndSelect.value());
+  showYearSpan(startYear, endYear);
+
+  const currentBird = birdSelect.value();
 
   const chartKey = /** @type {CountDatumKey} */ (graphTypeRadioGroup.value());
-
-  //Title text
-  textSize(24);
-  fill(255);
-  text(countData.name, 50, 50);
-  text(currentBird + ' : ' + startYear + ' - ' + endYear, 50, 80);
 
   //Calculate the max count so we can color that bar orange and size the rest of the bars
   /** @type {number[]} */
@@ -155,3 +111,5 @@ function drawChart() {
     } catch (_e) {}
   }
 }
+
+
