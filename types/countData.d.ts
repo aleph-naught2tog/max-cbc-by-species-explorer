@@ -3,13 +3,19 @@ type ScientificName = string;
 type FloatAsString = string;
 type AbsoluteCountYear = string;
 
-type BirdMap = Record<
-  ScientificName,
-  Record<
-    AbsoluteCountYear,
-    { howMany: number; numberByPartyHours: number }
-  >
+type CountDatum = {
+  howMany: number;
+  numberByPartyHours: number;
+};
+
+type CountDatumKey = keyof CountDatum;
+
+type CountMaps = Record<
+  AbsoluteCountYear,
+  CountDatum
 >;
+
+type BirdMap = Record<ScientificName, CountMaps>;
 
 interface BaseCountData {
   /**
@@ -33,6 +39,9 @@ interface BaseCountData {
 
 type CountData = Required<BaseCountData>;
 
-type TableCountData = Omit<CountData, 'name' | 'code' | 'birdList' | 'birdMap' | 'latLon'>;
+type TableCountData = Omit<
+  CountData,
+  'name' | 'code' | 'birdList' | 'birdMap' | 'latLon'
+>;
 
 type CountDataTableKeys = keyof TableCountData;
