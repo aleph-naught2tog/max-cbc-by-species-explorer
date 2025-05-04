@@ -24,7 +24,7 @@ the morning started with drizzle that developed into heavy rain, the
 */
 type RainStatus = string;
 
-interface CBCWeatherData {
+interface CBCWeather {
   CountYear: NumberAsString;
   HighTemp: NumberAsString;
   LowTemp: NumberAsString;
@@ -64,7 +64,7 @@ interface BaseCountData {
   effort?: P5Table;
   orgs?: P5Table;
   participants?: P5Table;
-  weather?: P5Table;
+  weather?: P5Table; // CBCWeather
 }
 
 type CountData = Required<BaseCountData>;

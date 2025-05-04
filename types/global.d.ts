@@ -335,6 +335,7 @@ declare function lerpColor(
 
 declare interface P5TableRow {
   arr: (string | number)[];
+  obj: Record<string, any>;
 
   set(columnSpecifier: string | number, value: string | number): void;
   setNum(columnSpecifier: string | number, value: number): void;
@@ -393,8 +394,9 @@ declare function createRadio(name: string): P5Radio;
 
 //// UTILS------
 
-declare interface TypedP5TableRow<T = string> {
+declare interface TypedP5TableRow<T = string, D = Record<string, T>> {
   arr: T[];
+  obj: D;
 
   set(columnSpecifier: string | number, value: T): void;
   setNum(columnSpecifier: string | number, value: number): void;
@@ -405,19 +407,19 @@ declare interface TypedP5TableRow<T = string> {
   getString(columnSpecifier: string | number): string;
 }
 
-declare interface TypedP5Table<T = string> {
+declare interface TypedP5Table<T = string, D = Record<string, T>> {
   columns: string[];
-  rows: TypedP5TableRow<T>[];
+  rows: TypedP5TableRow<T, D>[];
 
-  addRow(): TypedP5TableRow<T>;
-  addRow(row: P5TableRow): TypedP5TableRow<T>;
+  addRow(): TypedP5TableRow<T, D>;
+  addRow(row: P5TableRow): TypedP5TableRow<T, D>;
 
   removeRow(id: number): void;
 
   get(rowIndex: number, columnId: string | number): string | number;
 
-  getRow(id: number): TypedP5TableRow<T>;
-  getRows(): TypedP5TableRow<T>[];
+  getRow(id: number): TypedP5TableRow<T, D>;
+  getRows(): TypedP5TableRow<T, D>[];
 
   getColumnCount(): number;
   getRowCount(): number;
