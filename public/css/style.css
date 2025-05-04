@@ -34,3 +34,10 @@ to this section's matching END comment to see page-specific styles.
 [hidden] {
   display: none !important;
 }
+
+/* ------------------------------------ */
+
+ul.filters {
+  display: flex;
+  list-style: none;
+}

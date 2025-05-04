@@ -275,6 +275,8 @@ declare function createCanvas(
 ): P5Element;
 
 interface P5Element {
+  elt: HTMLElement;
+
   width: number;
   height: number;
 

@@ -6,9 +6,9 @@ function doWeatherStuff() {
   const {weather} = countData;
 
   // "CountYear,LowTemp,HighTemp,AMCloud,PMClouds,AMRain,PMRain,AMSnow,PMSnow"
-  console.debug({ weather })
+  // console.debug({ weather })
   for (const w of weather.getRows()) {
-    console.debug(w.obj)
+    // console.debug(w.obj)
   }
 }
 
