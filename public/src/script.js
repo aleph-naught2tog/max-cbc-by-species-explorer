@@ -15,9 +15,10 @@ let yearStartSelect;
 let yearEndSelect;
 
 /** @type {P5Radio} */
-let chartStyleRadioGroup;
+let graphTypeRadioGroup;
 
 function preload() {
+  validateIdPresence();
   loadCBCData('/data/CBC_WIMA_1947-2024.csv');
 }
 
@@ -26,14 +27,14 @@ function setup() {
 
   drawSelects(countData);
 
-  doWeatherStuff()
+  doWeatherStuff();
 }
 
 function draw() {
   background('#69F7BE');
 
   if (countData) {
-    drawChart();
+    // drawChart();
   }
 }
 
@@ -41,34 +42,40 @@ function draw() {
  * @param {CountData} birdData
  */
 function drawSelects(birdData) {
+  const s = document.getElementById(DOM_IDS.speciesSelect);
+
+  console.debug({ s })
   birdSelect = createSelect();
+  birdSelect.parent = document.getElementById('species_select_container')
 
   for (const birdName of [...birdData.birdList].sort()) {
     birdSelect.option(birdName);
   }
 
-  birdSelect.selected('Mallard')
+  birdSelect.selected('Mallard');
 
-  ////
-  yearStartSelect = createSelect();
-  yearEndSelect = createSelect();
+  // ////
+  // yearStartSelect = createSelect(
+  //   document.getElementById(DOM_IDS.startYearSelect)
+  // );
+  // yearEndSelect = createSelect(document.getElementById(DOM_IDS.endYearSelect));
 
-  const years = Object.keys(birdData.birdMap[birdData.birdList[0]]);
+  // const years = Object.keys(birdData.birdMap[birdData.birdList[0]]);
 
-  for (const year of years) {
-    yearStartSelect.option(year);
-    yearEndSelect.option(year);
-  }
+  // for (const year of years) {
+  //   yearStartSelect.option(year);
+  //   yearEndSelect.option(year);
+  // }
 
-  yearStartSelect.selected(DEFAULT_START_YEAR.toString());
-  yearEndSelect.selected(DEFAULT_END_YEAR.toString());
-  ////
+  // yearStartSelect.selected(DEFAULT_START_YEAR.toString());
+  // yearEndSelect.selected(DEFAULT_END_YEAR.toString());
+  // ////
 
-  chartStyleRadioGroup = createRadio('chart-style');
-  chartStyleRadioGroup.option('howMany', 'Bird count');
-  chartStyleRadioGroup.option('numberByPartyHours', 'By party hours');
+  // graphTypeRadioGroup = createRadio(DOM_IDS.graphTypeWrapper, 'graph-type');
+  // graphTypeRadioGroup.option('howMany', 'Bird count');
+  // graphTypeRadioGroup.option('numberByPartyHours', 'By party hours');
 
-  chartStyleRadioGroup.selected('howMany');
+  // graphTypeRadioGroup.selected('howMany');
 }
 
 function validateSelects() {
@@ -88,9 +95,7 @@ function drawChart() {
   const startYear = int(yearStartSelect.value());
   const endYear = int(yearEndSelect.value());
 
-  const chartKey = /** @type {CountDatumKey} */ (
-    chartStyleRadioGroup.value()
-  );
+  const chartKey = /** @type {CountDatumKey} */ (graphTypeRadioGroup.value());
 
   //Title text
   textSize(24);
