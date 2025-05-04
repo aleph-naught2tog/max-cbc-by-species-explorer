@@ -2,7 +2,7 @@
 let countData;
 
 //You can use a name here, otherwise it'll pick a random bird
-let DEFAULT_START_YEAR = 1987;
+let DEFAULT_START_YEAR = 1950;
 let DEFAULT_END_YEAR = 2023;
 
 /** @type {P5Dropdown} */
@@ -25,6 +25,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight - 100);
 
   drawSelects(countData);
+
+  doWeatherStuff()
 }
 
 function draw() {
@@ -33,6 +35,8 @@ function draw() {
   if (countData) {
     drawChart();
   }
+
+  noLoop()
 }
 
 /**
@@ -44,6 +48,8 @@ function drawSelects(birdData) {
   for (const birdName of [...birdData.birdList].sort()) {
     birdSelect.option(birdName);
   }
+
+  birdSelect.selected('Mallard')
 
   ////
   yearStartSelect = createSelect();
@@ -87,8 +93,6 @@ function drawChart() {
   const chartKey = /** @type {CountDatumKey} */ (
     chartStyleRadioGroup.value()
   );
-
-  console.debug({ chartKey })
 
   //Title text
   textSize(24);

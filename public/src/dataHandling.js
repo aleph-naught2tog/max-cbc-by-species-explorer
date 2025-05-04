@@ -2,6 +2,16 @@ let birdIndex = 0;
 
 let temps = [];
 
+function doWeatherStuff() {
+  const {weather} = countData;
+
+  // "CountYear,LowTemp,HighTemp,AMCloud,PMClouds,AMRain,PMRain,AMSnow,PMSnow"
+  console.debug({ weather })
+  for (const w of weather.getRows()) {
+    console.debug(w.obj)
+  }
+}
+
 /**
  *
  * @param {string} _url
