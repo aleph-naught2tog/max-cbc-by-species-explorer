@@ -1,39 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- 
-      This is an HTML comment
-      You can write text in a comment and the content won't be visible in the page
-    -->
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="https://glitch.com/favicon.ico" />
 
-    <!--
-      This is the page head - it contains info the browser uses
-      Like the title, which appears on the browser tab but not inside the page
-      Further down you'll see the content that displays in the page
-    -->
-    <title>CBC Template</title>
+    <title>CBC-by-species Explorer</title>
 
     <!-- The website stylesheet -->
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/public/css/style.css" />
+
     <!-- p5.js -->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
+
     <!-- The website JavaScript file -->
-    <script src="/script.js" defer></script>
+    <script src="/public/src/domUtils.js"></script>
+    <script src="/public/src/drawFilterUI.js" defer></script>
+    <script src="/public/src/dataHandling.js" defer></script>
+    <script src="/public/src/script.js" defer></script>
   </head>
+
   <body>
+    <header>
+      <h1>Christmas Bird Count</h1>
+      <h2 id="location_name"></h2>
+      <h3 id="year_span">
+        <span id="start_year"></span>&ndash;<span id="end_year"></span>
+      </h3>
+    </header>
+
     <main>
+      <ul class="filters">
+        <li id="species_select_container"></li>
+        <li id="start_year_select_container"></li>
+        <li id="end_year_select_container"></li>
+        <li id="graph_type_container"></li>
+      </ul>
     </main>
+
     <!-- The footer holds our remix button — you can keep or delete it ✂ -->
     <footer class="footer">
-      <div class="links"></div>
       <a
-        class="btn--remix"
-        target="_top"
-        href="https://glitch.com/edit/#!/remix/glitch-hello-website"
+        target="_blank"
+        href="https://glitch.com/edit/#!/remix/max-cbc-by-species-explorer"
       >
         <img
           src="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2FLogo_Color.svg?v=1618199565140"
