@@ -35,8 +35,6 @@ function draw() {
   if (countData) {
     drawChart();
   }
-
-  noLoop()
 }
 
 /**

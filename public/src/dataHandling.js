@@ -114,12 +114,13 @@ function processCBCData(_data) {
   ];
 
   let tcount = 0;
-  let table;
+  /** @type {TypedP5Table | null} */
+  let table = null;
 
   for (let i = 3; i < _data.getRowCount(); i++) {
     let row = _data.getRow(i);
     if (!table) {
-      table = new p5.Table();
+      table = /** @type {TypedP5Table} */(new p5.Table());
       //console.log("---");
       let colNames = cleanHeaders[tcount].split(',');
       for (let j = 0; j < colNames.length; j++) {
@@ -127,6 +128,7 @@ function processCBCData(_data) {
         table.addColumn(colNames[j]);
       }
 
+      // @ts-expect-error 2322
       count[order[tcount]] = table;
     } else if (row.arr.join('').indexOf('CountYear') != -1) {
       table = null;

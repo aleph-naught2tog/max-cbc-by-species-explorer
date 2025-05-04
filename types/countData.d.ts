@@ -59,12 +59,12 @@ interface BaseCountData {
   birdList: CommonName[];
   birdMap: BirdMap;
   latLon: { lat: FloatAsString; lon: FloatAsString };
-  checklist?: P5Table;
-  compilers?: P5Table;
-  effort?: P5Table;
-  orgs?: P5Table;
-  participants?: P5Table;
-  weather?: P5Table; // CBCWeather
+  checklist?: TypedP5Table<string>;
+  compilers?: TypedP5Table<string>;
+  effort?: TypedP5Table<string>;
+  orgs?: TypedP5Table<string>;
+  participants?: TypedP5Table<string>;
+  weather?: TypedP5Table<string, CBCWeather>;
 }
 
 type CountData = Required<BaseCountData>;

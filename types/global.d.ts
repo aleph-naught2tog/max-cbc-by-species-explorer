@@ -411,6 +411,8 @@ declare interface TypedP5Table<T = string, D = Record<string, T>> {
   columns: string[];
   rows: TypedP5TableRow<T, D>[];
 
+  addColumn(title?: string): void;
+
   addRow(): TypedP5TableRow<T, D>;
   addRow(row: P5TableRow): TypedP5TableRow<T, D>;
 
