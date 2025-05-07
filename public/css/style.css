@@ -79,6 +79,8 @@ select {
 }
 
 .radio-group {
+  display: flex;
+  flex-direction: column;
 }
 
 .footer {

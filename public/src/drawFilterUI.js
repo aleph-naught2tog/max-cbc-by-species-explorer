@@ -65,6 +65,7 @@ function createYearsSelects(birdData) {
 
 function createGraphTypeRadios() {
   graphTypeRadioGroup = createRadio('graph-type');
+  graphTypeRadioGroup.class('radio-group')
   appendElementToDOMContainer(graphTypeRadioGroup, 'graph_type_container');
   populateGraphTypeRadios(graphTypeRadioGroup);
 }
