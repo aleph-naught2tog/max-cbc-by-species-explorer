@@ -254,28 +254,28 @@ declare interface Window {
 declare function angleMode(): AngleMode;
 declare function angleMode(mode: AngleMode): void;
 
-declare function createCanvas(): P5Element;
-declare function createCanvas(width: number): P5Element;
-declare function createCanvas(width: number, height: number): P5Element;
+declare function createCanvas(): P5Element<HTMLCanvasElement>;
+declare function createCanvas(width: number): P5Element<HTMLCanvasElement>;
+declare function createCanvas(width: number, height: number): P5Element<HTMLCanvasElement>;
 declare function createCanvas(
   width: number,
   height: number,
   renderMode: RenderMode
-): P5Element;
+): P5Element<HTMLCanvasElement>;
 declare function createCanvas(
   width: number,
   height: number,
   canvasElement: HTMLCanvasElement
-): P5Element;
+): P5Element<HTMLCanvasElement>;
 declare function createCanvas(
   width: number,
   height: number,
   renderMode: RenderMode,
   canvasElement: HTMLCanvasElement
-): P5Element;
+): P5Element<HTMLCanvasElement>;
 
-interface P5Element {
-  elt: HTMLElement;
+interface P5Element<E extends HTMLElement = HTMLElement> {
+  elt: E;
 
   width: number;
   height: number;
@@ -303,6 +303,8 @@ interface P5Element {
   ): { x: number; y: number };
 
   html(innerHtml: string, append?: boolean): void;
+  attribute(attr: string): string | null;
+  attribute(attr: string, value: string): string;
 }
 
 type CssPosition =
@@ -368,8 +370,9 @@ declare interface P5Table {
   getRowCount(): number;
 }
 
-declare function createDiv(innerHTML?: string): P5Element;
+declare function createDiv(innerHTML?: string): P5Element<HTMLDivElement>;
 declare function createElement(tagName: string, content?: string): P5Element;
+declare function createInput(initialValue?: string, type?: 'text' | 'number'): P5InputElement;
 
 declare function textSize(size: number): void;
 declare function textFont(fontName: string): void;
@@ -377,7 +380,7 @@ declare function textFont(fontName: string): void;
 declare function int(val: string | number | boolean): number;
 declare function int(arr: Array<string | number | boolean>): Array<number>;
 
-interface P5Dropdown extends P5Element {
+interface P5Dropdown extends P5Element<HTMLSelectElement> {
   option(valueAndName: string): void;
   option(value: string, label: string): void;
 
@@ -387,7 +390,19 @@ interface P5Dropdown extends P5Element {
   selected(defaultValue: string): void;
 }
 
-interface P5Radio extends P5Dropdown {}
+interface P5Radio extends P5Dropdown {
+  option(valueAndName: string): void;
+  option(value: string, label: string): void;
+
+  value(): string;
+
+  selected(): string;
+  selected(defaultValue: string): void;
+}
+
+interface P5InputElement extends P5Element<HTMLInputElement> {
+  value(): string;
+}
 
 declare function createSelect(): P5Dropdown;
 

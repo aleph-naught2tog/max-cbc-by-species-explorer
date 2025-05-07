@@ -8,29 +8,32 @@ let DEFAULT_END_YEAR = 2023;
 /** @type {P5Dropdown} */
 let birdSelect;
 
-/** @type {P5Dropdown} */
-let yearStartSelect;
+/** @type {P5InputElement} */
+let yearStartNumberInput;
 
-/** @type {P5Dropdown} */
-let yearEndSelect;
+/** @type {P5InputElement} */
+let yearEndNumberInput;
 
 /** @type {P5Radio} */
 let graphTypeRadioGroup;
 
 function preload() {
-  loadCBCData('/data/CBC_WIMA_1947-2024.csv');
+  loadCBCData('/data/CBC_WIMA_1901-2024.csv');
 }
 
 function setup() {
-  createCanvas(windowWidth - 100, windowHeight - 100);
+  const canvasElement = absolutelyGetSpecificElementById(
+    'p5_canvas_target',
+    'canvas'
+  );
+
+  createCanvas(windowWidth - 100, windowHeight - 100, canvasElement);
 
   drawFilterUI(countData);
-
-  // doWeatherStuff();
 }
 
 function draw() {
-  background('#69F7BE');
+  background('lemonchiffon');
 
   if (countData) {
     drawChart();
@@ -38,8 +41,8 @@ function draw() {
 }
 
 function validateSelects() {
-  const yearStartAsInt = int(yearStartSelect.selected());
-  const yearEndAsInt = int(yearEndSelect.selected());
+  const yearStartAsInt = int(yearStartNumberInput.value());
+  const yearEndAsInt = int(yearEndNumberInput.value());
 
   if (yearEndAsInt < yearStartAsInt) {
     throw new Error('Ending year must be before or equal to starting year.');
@@ -51,8 +54,8 @@ function drawChart() {
   validateSelects();
   showLocationName(countData.name);
 
-  const startYear = int(yearStartSelect.value());
-  const endYear = int(yearEndSelect.value());
+  const startYear = int(yearStartNumberInput.value());
+  const endYear = int(yearEndNumberInput.value());
   showYearSpan(startYear, endYear);
 
   const currentBird = birdSelect.value();
@@ -111,5 +114,3 @@ function drawChart() {
     } catch (_e) {}
   }
 }
-
-

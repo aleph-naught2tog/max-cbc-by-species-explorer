@@ -3,28 +3,12 @@
  * @param {CountData} birdData
  */
 function populateBirdSelect(birdSelect, birdData) {
+  // TODO: maybe optgroups by family?
   for (const birdName of [...birdData.birdList].sort()) {
     birdSelect.option(birdName);
   }
 
   birdSelect.selected('Mallard');
-}
-
-/**
- * @param {P5Dropdown} yearStartSelect
- * @param {P5Dropdown} yearEndSelect
- * @param {CountData} birdData
- */
-function populateYearSelects(yearStartSelect, yearEndSelect, birdData) {
-  const years = Object.keys(birdData.birdMap[birdData.birdList[0]]);
-
-  for (const year of years) {
-    yearStartSelect.option(year);
-    yearEndSelect.option(year);
-  }
-
-  yearStartSelect.selected(DEFAULT_START_YEAR.toString());
-  yearEndSelect.selected(DEFAULT_END_YEAR.toString());
 }
 
 /**
@@ -42,30 +26,47 @@ function populateGraphTypeRadios(graphTypeRadioGroup) {
  */
 function createBirdSelect(birdData) {
   birdSelect = createSelect();
+  birdSelect.id("species_select");
+
+  const birdSelectLabel = createElement('label', 'Bird species');
+  birdSelectLabel.attribute('for', 'species_select');
+
+  appendElementToDOMContainer(birdSelectLabel, 'species_select_container');
   appendElementToDOMContainer(birdSelect, 'species_select_container');
   populateBirdSelect(birdSelect, birdData);
-
 }
 
 /**
  * @param {CountData} birdData
  */
 function createYearsSelects(birdData) {
-  ////
-  yearStartSelect = createSelect();
-  appendElementToDOMContainer(yearStartSelect, 'start_year_select_container');
+  yearStartNumberInput = createInput(`${DEFAULT_START_YEAR}`, 'number');
+  yearStartNumberInput.id('start_year_select');
+  const yearStartNumberInputLabel = createElement('label', "Start year:");
+  yearStartNumberInputLabel.attribute('for', 'start_year_select');
 
-  yearEndSelect = createSelect();
-  appendElementToDOMContainer(yearEndSelect, 'end_year_select_container');
-  populateYearSelects(yearStartSelect, yearEndSelect, birdData);
+  appendElementToDOMContainer(yearStartNumberInputLabel, 'start_year_select_container');
+  appendElementToDOMContainer(yearStartNumberInput, 'start_year_select_container');
 
+  yearEndNumberInput = createInput(`${DEFAULT_END_YEAR}`, 'number');
+  yearEndNumberInput.id('year_end_select');
+  const yearEndNumberInputLabel = createElement('label', "End year:");
+  yearEndNumberInputLabel.attribute('for', 'year_end_select');
+
+  for (const input of [yearStartNumberInput, yearEndNumberInput]) {
+    input.attribute('min', '1900');
+    input.attribute('max', '2024');
+    input.attribute('required', 'true');
+  }
+
+  appendElementToDOMContainer(yearEndNumberInputLabel, 'end_year_select_container');
+  appendElementToDOMContainer(yearEndNumberInput, 'end_year_select_container');
 }
 
 function createGraphTypeRadios() {
-    ////
-    graphTypeRadioGroup = createRadio('graph-type');
-    appendElementToDOMContainer(graphTypeRadioGroup, 'graph_type_container');
-    populateGraphTypeRadios(graphTypeRadioGroup);
+  graphTypeRadioGroup = createRadio('graph-type');
+  appendElementToDOMContainer(graphTypeRadioGroup, 'graph_type_container');
+  populateGraphTypeRadios(graphTypeRadioGroup);
 }
 
 /**

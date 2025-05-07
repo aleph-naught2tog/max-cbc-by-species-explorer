@@ -1,34 +1,29 @@
-/******************************************************************************
-START Glitch hello-app default styles
-
-The styles in this section do some minimal CSS resets, set default fonts and
-colors, and handle the layout for our footer and "Remix on Glitch" button. If
-you're new to CSS they may seem a little complicated, but you can scroll down
-to this section's matching END comment to see page-specific styles.
-******************************************************************************/
-
-
-/*
-  The style rules specify elements by type and by attributes such as class and ID
-  Each section indicates an element or elements, then lists the style properties to apply
-  See if you can cross-reference the rules in this file with the elements in index.html
-*/
-
 /* Our default values set as CSS variables */
 :root {
-  --color-bg: #69F7BE;
-  --color-text-main: #000000;
-  --color-primary: #FFFF00;
   --wrapper-height: 87vh;
   --image-max-width: 300px;
   --image-margin: 3rem;
-  --font-family: "HK Grotesk";
-  --font-family-header: "HK Grotesk";
+
+  --display-font: "Abril Fatface", serif;
+  --regular-font: "Poppins", sans-serif;
 }
 
 /* Basic page style resets */
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1rem;
+  line-height: normal;
+  font-weight: normal;
 }
 
 [hidden] {
@@ -37,7 +32,57 @@ to this section's matching END comment to see page-specific styles.
 
 /* ------------------------------------ */
 
-ul.filters {
+.header {
+  font-family: var(--display-font);
+  display: flex;
+}
+
+main {
+  font-family: var(--regular-font);
+  display: flex;
+}
+
+/* ----- */
+
+.filter-sidebar {
+
+}
+
+.canvas-wrapper {
+
+}
+
+/* ----- */
+
+.title {
+}
+
+.location-name-heading {
+}
+
+.year-span-heading {
+}
+
+.filters {
   display: flex;
   list-style: none;
+
+  flex-direction: column;
+}
+
+select {
+
+}
+
+.dropdown-select {
+
+}
+
+.radio-group {
+}
+
+.footer {
+}
+
+.glitch-remix-button {
 }
