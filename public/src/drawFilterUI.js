@@ -5,7 +5,10 @@ function renderBirdSelect(birdData) {
   if (!birdSearch) {
     birdSearch = createInput();
     birdSearch.id('species_search');
+    const birdSearchLabel = createElement('label', 'Search');
+    birdSearchLabel.attribute('for', 'species_search');
 
+    appendElementToDOMContainer(birdSearchLabel, 'search_input_wrapper');
     appendElementToDOMContainer(birdSearch, 'search_input_wrapper');
   }
 
@@ -28,27 +31,24 @@ function renderBirdSelect(birdData) {
 }
 
 /**
- * @param {P5Dropdown} birdSelect
+ * @param {P5Dropdown} birdRadio
  * @param {string[]} birdList
  * @param {boolean} firstTime
  * @param {string} searchValue
  */
-function populateBirdSelect(birdSelect, birdList, firstTime, searchValue) {
-  console.debug({ birdList, l: birdList.length, searchValue });
-  // TODO: maybe optgroups by family?
-  // when unsorted it's by family
+function populateBirdSelect(birdRadio, birdList, firstTime, searchValue) {
   if (firstTime) {
     for (const birdName of birdList.sort()) {
-      birdSelect.option(birdName);
+      birdRadio.option(birdName);
     }
   }
 
-  const options = birdSelect.elt.querySelectorAll('label');
+  const options = birdRadio.elt.querySelectorAll('label');
   if (searchValue) {
     for (const opt of options) {
       const hasMatch = opt.innerText
         .toLowerCase()
-        .startsWith(searchValue.toLowerCase());
+        .includes(searchValue.toLowerCase());
 
       if (hasMatch) {
         opt.style.display = '';
@@ -62,8 +62,8 @@ function populateBirdSelect(birdSelect, birdList, firstTime, searchValue) {
     }
   }
 
-  if (!birdSelect.selected()) {
-    birdSelect.selected('Mallard');
+  if (!birdRadio.selected()) {
+    birdRadio.selected('Mallard');
   }
 }
 

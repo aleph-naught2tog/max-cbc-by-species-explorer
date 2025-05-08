@@ -28,7 +28,7 @@
     <script src="/public/src/script.js" defer></script>
   </head>
 
-  <body class="container ">
+  <body class="container">
     <header class="header">
       <h1 class="title">
         <span> Christmas Bird Count</span>
@@ -39,28 +39,31 @@
     <main class="potato">
       <section class="filter-sidebar">
         <div class="filters-wrapper">
-          <h2>Filters</h2>
+          <h2 class="filters-header">Settings</h2>
           <fieldset>
             <legend>Bird species</legend>
-            <div id="search_input_wrapper"></div>
-            <div id="species_select_container"></div>
+            <div class="input-target" id="search_input_wrapper"></div>
+            <div class="input-target" id="species_select_container"></div>
           </fieldset>
 
           <fieldset>
             <legend>Year range</legend>
             <div
-              class="year-input-wrapper"
+              class="year-input-wrapper input-target"
               id="start_year_select_container"
             ></div>
             <div
-              class="year-input-wrapper"
+              class="year-input-wrapper input-target"
               id="end_year_select_container"
             ></div>
           </fieldset>
 
           <fieldset>
             <legend>Graph type</legend>
-            <div id="graph_type_container">
+            <div
+              class="input-target graph-type-input-wrapper"
+              id="graph_type_container"
+            >
               <!-- An internal div.radio-group will render inside here  -->
             </div>
           </fieldset>

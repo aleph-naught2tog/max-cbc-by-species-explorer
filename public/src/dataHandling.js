@@ -66,13 +66,13 @@ participants     "CountYear,FirstName,LastName"
  * @param {TypedP5Table<string>} _data
  * @returns {CountData} the processed data
  */
-function processCBCData(_data) {
+function processCBCData(_data, _skipEmpty = true) {
   //set the properties of the count
   //L.I.: Brooklyn,NYBR,40.6160370000/-73.9448350000
   let details = _data.getRow(1);
 
   /** @type {BaseCountData} */
-  let count = ({
+  let count = {
     name: details.get(0),
     code: details.get(1),
     latLon: {
@@ -81,7 +81,7 @@ function processCBCData(_data) {
     },
     birdMap: {},
     birdList: [],
-  });
+  };
 
   //Go through the data and create a series of Table objects
   /** @type {Array<CountDataTableKeys>} */
@@ -110,7 +110,7 @@ function processCBCData(_data) {
   for (let i = 3; i < _data.getRowCount(); i++) {
     let row = _data.getRow(i);
     if (!table) {
-      table = /** @type {TypedP5Table} */(new p5.Table());
+      table = /** @type {TypedP5Table} */ (new p5.Table());
       //console.log("---");
       let colNames = cleanHeaders[tcount].split(',');
       for (let j = 0; j < colNames.length; j++) {
@@ -137,7 +137,6 @@ function processCBCData(_data) {
 
         if (!count.birdMap[birdName]) {
           count.birdMap[birdName] = {};
-          count.birdList.push(birdName);
         }
 
         count.birdMap[birdName][year] = {
@@ -146,6 +145,18 @@ function processCBCData(_data) {
         };
       }
     }
+  }
+
+  if (_skipEmpty) {
+    count.birdMap = Object.fromEntries(
+      Object.entries(count.birdMap).filter(([_birdName, data]) => {
+        return Object.entries(data).some(([_year, datum]) => {
+          return datum.howMany > 0;
+        });
+      })
+    );
+
+    count.birdList = Object.keys(count.birdMap);
   }
 
   return /** @type {CountData} */ (count);

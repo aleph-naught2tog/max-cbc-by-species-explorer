@@ -20,12 +20,76 @@ let birdSearch;
 /** @type {P5Radio} */
 let graphTypeRadioGroup;
 
+const COLOR_PALETTE =
+  // [
+  //   '#fff7fb',
+  //   '#ece2f0',
+  //   '#d0d1e6',
+  //   '#a6bddb',
+  //   '#67a9cf',
+  //   '#3690c0',
+  //   '#02818a',
+  //   '#016c59',
+  //   '#014636',
+  // ];
+  [
+    '#f7fcfd',
+    '#e0ecf4',
+    '#bfd3e6',
+    '#9ebcda',
+    '#8c96c6',
+    '#8c6bb1',
+    '#88419d',
+    '#6e016b',
+  ];
+  // [
+  //   '#80ffdb',
+  //   '#72efdd',
+  //   '#64dfdf',
+  //   '#56cfe1',
+  //   '#48bfe3',
+  //   '#4ea8de',
+  //   '#5390d9',
+  //   '#5e60ce',
+  //   '#6930c3',
+  //   '#7400b8',
+  // ];
+  // [
+  //   '#fbf8cc',
+  //   '#fde4cf',
+  //   '#ffcfd2',
+  //   '#f1c0e8',
+  //   '#cfbaf0',
+  //   '#a3c4f3',
+  //   '#90dbf4',
+  //   '#8eecf5',
+  //   '#98f5e1',
+  //   '#b9fbc0',
+  // ];
+  // [
+  //   '#ea698b',
+  //   '#d55d92',
+  //   '#c05299',
+  //   '#ac46a1',
+  //   '#973aa8',
+  //   '#822faf',
+  //   '#6d23b6',
+  //   '#6411ad',
+  //   '#571089',
+  //   '#47126b',
+  // ];
+  // [
+  //   '#e0b1cb',
+  //   '#be95c4',
+  //   '#9f86c0',
+  //   '#5e548e',
+  //   '#231942',
+  // ];
 function preload() {
   loadCBCData('/data/CBC_WIMA_1901-2024.csv');
 }
 
 function setup() {
-
   const canvasElement = absolutelyGetSpecificElementById(
     'p5_canvas_target',
     'canvas'
@@ -40,7 +104,6 @@ function setup() {
     wrapper.getBoundingClientRect();
 
   createCanvas(rectWidth, rectHeight, canvasElement);
-
 }
 
 function draw() {
@@ -87,6 +150,7 @@ function drawChart() {
   }
 
   let maxNum = max(nums);
+  console.debug({ nums, maxNum });
 
   //Draw the graph
   for (let i = startYear; i <= endYear; i++) {
@@ -97,8 +161,12 @@ function drawChart() {
       let y = height - 100;
       let h = -map(num, 0, maxNum, 0, height - 300);
 
+      const colorIndex = floor(
+        map(num, 0, maxNum, 0, COLOR_PALETTE.length - 1)
+      );
+
       //The bar
-      fill(num == maxNum ? '#FF9900' : 255);
+      fill(COLOR_PALETTE[colorIndex]);
       rect(x, y, 10, h);
       push();
 
