@@ -43,20 +43,22 @@ function populateBirdSelect(birdSelect, birdList, firstTime, searchValue) {
     }
   }
 
-  // TODO: reset when empty
+  const options = birdSelect.elt.querySelectorAll('label');
   if (searchValue) {
-    const options = birdSelect.elt.querySelectorAll('label');
-    console.debug({ birdSelect })
-    console.debug({options}, 'exists')
     for (const opt of options) {
-      console.debug({opt})
-      opt.style.display = '';
-      if (opt.innerText.toLowerCase().startsWith(searchValue.toLowerCase())) {
-        console.debug('matches');
+      const hasMatch = opt.innerText
+        .toLowerCase()
+        .startsWith(searchValue.toLowerCase());
+
+      if (hasMatch) {
         opt.style.display = '';
       } else {
         opt.style.display = 'none';
       }
+    }
+  } else {
+    for (const opt of options) {
+      opt.style.display = '';
     }
   }
 
