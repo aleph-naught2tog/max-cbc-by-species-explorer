@@ -290,6 +290,7 @@ interface P5Element<E extends HTMLElement = HTMLElement> {
 
   class(className: string): void;
   class(): string;
+  addClass(className: string): void;
 
   child(): Node[];
   child(id: string): void;

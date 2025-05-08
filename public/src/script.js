@@ -6,7 +6,7 @@ let DEFAULT_START_YEAR = 1950;
 let DEFAULT_END_YEAR = 2023;
 
 /** @type {P5Dropdown} */
-let birdSelect;
+let birdRadio;
 
 /** @type {P5InputElement} */
 let yearStartNumberInput;
@@ -27,7 +27,14 @@ function setup() {
     'canvas'
   );
 
-  createCanvas(windowWidth - 100, windowHeight - 100, canvasElement);
+  const wrapper = canvasElement.parentElement;
+  if (!wrapper) {
+    throw new Error('no canvas parent');
+  }
+  const { width: rectWidth, height: rectHeight } =
+    wrapper.getBoundingClientRect();
+
+  createCanvas(rectWidth, rectHeight, canvasElement);
 
   drawFilterUI(countData);
 }
@@ -58,7 +65,7 @@ function drawChart() {
   const endYear = int(yearEndNumberInput.value());
   showYearSpan(startYear, endYear);
 
-  const currentBird = birdSelect.value();
+  const currentBird = birdRadio.value();
 
   const chartKey = /** @type {CountDatumKey} */ (graphTypeRadioGroup.value());
 

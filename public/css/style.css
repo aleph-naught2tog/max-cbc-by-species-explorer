@@ -4,8 +4,8 @@
   --image-max-width: 300px;
   --image-margin: 3rem;
 
-  --display-font: "Abril Fatface", serif;
-  --regular-font: "Poppins", sans-serif;
+  --display-font: 'Abril Fatface', serif;
+  --regular-font: 'Poppins', sans-serif;
 }
 
 /* Basic page style resets */
@@ -45,11 +45,15 @@ main {
 /* ----- */
 
 .filter-sidebar {
+  display: flex;
+  flex-direction: column;
 
+  width: 36ex;
 }
 
 .canvas-wrapper {
-
+  width: 100%;
+  height: 100vh;
 }
 
 /* ----- */
@@ -63,28 +67,37 @@ main {
 .year-span-heading {
 }
 
-.filters {
-  display: flex;
-  list-style: none;
-
-  flex-direction: column;
-}
-
-select {
-
-}
-
-.dropdown-select {
-
-}
-
 .radio-group {
   display: flex;
   flex-direction: column;
+}
+
+.bird-species-radios {
+  height: 15rem;
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .footer {
 }
 
 .glitch-remix-button {
+}
+
+label:has(> input) {
+  font-size: 0.85rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+label:has(> input) > span {
+  line-height: 1;
+}
+
+label {
+  font-size: 0.85rem;
 }
