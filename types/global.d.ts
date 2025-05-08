@@ -444,3 +444,5 @@ declare interface TypedP5Table<T = string, D = Record<string, T>> {
   getColumnCount(): number;
   getRowCount(): number;
 }
+
+declare function noLoop(): void;

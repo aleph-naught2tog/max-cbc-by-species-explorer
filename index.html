@@ -28,10 +28,12 @@
     <script src="/public/src/script.js" defer></script>
   </head>
 
-  <body>
+  <body class="container ">
     <header class="header">
-      <h1 class="title">Christmas Bird Count</h1>
-      <h2 class="location-name-heading" id="location_name"></h2>
+      <h1 class="title">
+        <span> Christmas Bird Count</span>
+        <span class="location-name-heading" id="location_name"></span>
+      </h1>
     </header>
 
     <main class="potato">
@@ -40,13 +42,20 @@
           <h2>Filters</h2>
           <fieldset>
             <legend>Bird species</legend>
+            <div id="search_input_wrapper"></div>
             <div id="species_select_container"></div>
           </fieldset>
 
           <fieldset>
             <legend>Year range</legend>
-            <div class="year-input-wrapper" id="start_year_select_container"></div>
-            <div class="year-input-wrapper" id="end_year_select_container"></div>
+            <div
+              class="year-input-wrapper"
+              id="start_year_select_container"
+            ></div>
+            <div
+              class="year-input-wrapper"
+              id="end_year_select_container"
+            ></div>
           </fieldset>
 
           <fieldset>

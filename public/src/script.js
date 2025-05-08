@@ -14,6 +14,9 @@ let yearStartNumberInput;
 /** @type {P5InputElement} */
 let yearEndNumberInput;
 
+/** @type {P5InputElement} */
+let birdSearch;
+
 /** @type {P5Radio} */
 let graphTypeRadioGroup;
 
@@ -22,6 +25,7 @@ function preload() {
 }
 
 function setup() {
+
   const canvasElement = absolutelyGetSpecificElementById(
     'p5_canvas_target',
     'canvas'
@@ -37,11 +41,11 @@ function setup() {
 
   createCanvas(rectWidth, rectHeight, canvasElement);
 
-  drawFilterUI(countData);
 }
 
 function draw() {
   background('lemonchiffon');
+  renderFilterUI(countData);
 
   if (countData) {
     drawChart();

@@ -29,7 +29,6 @@ h6 {
   --horizontal-padding: 1rem;
 }
 
-
 /* ------------------------------------ */
 
 body {
@@ -61,7 +60,7 @@ main {
 
   justify-content: space-between;
 
-  padding-inline: var(--horizontal-padding)
+  padding-inline: var(--horizontal-padding);
 }
 
 .filters-wrapper {
@@ -70,24 +69,23 @@ main {
 }
 
 .remix-wrapper {
-
 }
 
 .canvas-wrapper {
-  width: calc(100% - 3rem);
+  width: calc(100% - 5rem);
   height: calc(100vh - var(--header-height));
 }
 
 /* ----- */
 
-.title, .location-name-heading {
-  font-size: 2rem;
-}
-
 .title {
-}
+  width: 100%;
 
-.location-name-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 2rem;
 }
 
 .radio-group {
@@ -102,6 +100,8 @@ main {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  padding: 0.5rem;
 }
 
 .footer {
@@ -126,9 +126,13 @@ label {
 }
 
 .year-input-wrapper {
-
+  display: flex;
+  gap: 0.5rem;
 }
 
 .whoa {
+}
 
+fieldset {
+  padding: 0 0.5rem;
 }
