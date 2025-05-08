@@ -31,6 +31,7 @@ function setup() {
   if (!wrapper) {
     throw new Error('no canvas parent');
   }
+
   const { width: rectWidth, height: rectHeight } =
     wrapper.getBoundingClientRect();
 
@@ -63,7 +64,6 @@ function drawChart() {
 
   const startYear = int(yearStartNumberInput.value());
   const endYear = int(yearEndNumberInput.value());
-  showYearSpan(startYear, endYear);
 
   const currentBird = birdRadio.value();
 

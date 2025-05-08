@@ -86,21 +86,6 @@ function showLocationName(locationName) {
 }
 
 /**
- * @param {number} startYear
- * @param {number} endYear
- */
-function showYearSpan(startYear, endYear) {
-  const startId = 'start_year';
-  const endId = 'end_year';
-
-  const startYearElement = absolutelyGetElementById(startId);
-  const endYearElement = absolutelyGetElementById(endId);
-
-  startYearElement.innerText = startYear.toString();
-  endYearElement.innerText = endYear.toString();
-}
-
-/**
  * @param {CountData} birdData
  */
 function drawFilterUI(birdData) {
