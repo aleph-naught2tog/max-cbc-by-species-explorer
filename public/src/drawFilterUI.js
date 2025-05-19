@@ -1,48 +1,129 @@
-function populateBirdSelect(birdSelect, birdData) {
-  for (const birdName of [...birdData.birdList].sort()) {
-    birdSelect.option(birdName);
+/**
+ * @param {CountData} birdData
+ */
+function renderBirdSelect(birdData) {
+  if (!birdSearch) {
+    birdSearch = createInput();
+    birdSearch.id('species_search');
+    const birdSearchLabel = createElement('label', 'Search');
+    birdSearchLabel.attribute('for', 'species_search');
+
+    appendElementToDOMContainer(birdSearchLabel, 'search_input_wrapper');
+    appendElementToDOMContainer(birdSearch, 'search_input_wrapper');
   }
 
-  birdSelect.selected('Mallard');
-}
-function populateYearSelects(yearStartSelect, yearEndSelect, birdData) {
-  const years = Object.keys(birdData.birdMap[birdData.birdList[0]]);
+  const firstTime = !birdRadio;
+  if (firstTime) {
+    birdRadio = createRadio('bird-species');
+    birdRadio.id('species_select');
+    birdRadio.addClass('radio-group');
+    birdRadio.addClass('bird-species-radios');
 
-  for (const year of years) {
-    yearStartSelect.option(year);
-    yearEndSelect.option(year);
+    appendElementToDOMContainer(birdRadio, 'species_select_container');
   }
 
-  yearStartSelect.selected(DEFAULT_START_YEAR.toString());
-  yearEndSelect.selected(DEFAULT_END_YEAR.toString());
+  populateBirdSelect(
+    birdRadio,
+    birdData.birdList,
+    firstTime,
+    birdSearch.value()
+  );
 }
 
+/**
+ * @param {P5Dropdown} birdRadio
+ * @param {string[]} birdList
+ * @param {boolean} firstTime
+ * @param {string} searchValue
+ */
+function populateBirdSelect(birdRadio, birdList, firstTime, searchValue) {
+  if (firstTime) {
+    for (const birdName of birdList.sort()) {
+      birdRadio.option(birdName);
+    }
+  }
+
+  const options = birdRadio.elt.querySelectorAll('label');
+  if (searchValue) {
+    for (const opt of options) {
+      const hasMatch = opt.innerText
+        .toLowerCase()
+        .includes(searchValue.toLowerCase());
+
+      if (hasMatch) {
+        opt.style.display = '';
+      } else {
+        opt.style.display = 'none';
+      }
+    }
+  } else {
+    for (const opt of options) {
+      opt.style.display = '';
+    }
+  }
+
+  if (!birdRadio.selected()) {
+    birdRadio.selected('Mallard');
+  }
+}
+
+/**
+ * @param {P5Radio} graphTypeRadioGroup
+ */
 function populateGraphTypeRadios(graphTypeRadioGroup) {
   graphTypeRadioGroup.option('howMany', 'Bird count');
   graphTypeRadioGroup.option('numberByPartyHours', 'By party hours');
 
-  graphTypeRadioGroup.selected('howMany');
+  if (!graphTypeRadioGroup.selected()) {
+    graphTypeRadioGroup.selected('howMany');
+  }
 }
 
-/**
- * @param {CountData} birdData
- */
-function drawFilterUI(birdData) {
-  birdSelect = createSelect();
-  appendElementToDOMContainer(birdSelect, 'species_select_container');
-  populateBirdSelect(birdSelect, birdData);
+function renderYearInputs() {
+  if (!yearStartNumberInput && !yearEndNumberInput) {
+    yearStartNumberInput = createInput(`${DEFAULT_START_YEAR}`, 'number');
+    yearStartNumberInput.id('start_year_select');
+    const yearStartNumberInputLabel = createElement('label', 'Start year:');
+    yearStartNumberInputLabel.attribute('for', 'start_year_select');
 
-  ////
-  yearStartSelect = createSelect();
-  appendElementToDOMContainer(yearStartSelect, 'start_year_select_container');
+    appendElementToDOMContainer(
+      yearStartNumberInputLabel,
+      'start_year_select_container'
+    );
+    appendElementToDOMContainer(
+      yearStartNumberInput,
+      'start_year_select_container'
+    );
 
-  yearEndSelect = createSelect();
-  appendElementToDOMContainer(yearEndSelect, 'end_year_select_container');
-  populateYearSelects(yearStartSelect, yearEndSelect, birdData);
+    yearEndNumberInput = createInput(`${DEFAULT_END_YEAR}`, 'number');
+    yearEndNumberInput.id('year_end_select');
+    const yearEndNumberInputLabel = createElement('label', 'End year:');
+    yearEndNumberInputLabel.attribute('for', 'year_end_select');
 
-  ////
-  graphTypeRadioGroup = createRadio('graph-type');
-  appendElementToDOMContainer(graphTypeRadioGroup, 'graph_type_container');
+    for (const input of [yearStartNumberInput, yearEndNumberInput]) {
+      input.attribute('min', '1900');
+      input.attribute('max', '2024');
+      input.attribute('required', 'true');
+    }
+
+    appendElementToDOMContainer(
+      yearEndNumberInputLabel,
+      'end_year_select_container'
+    );
+    appendElementToDOMContainer(
+      yearEndNumberInput,
+      'end_year_select_container'
+    );
+  }
+}
+
+function renderGraphTypeRadios() {
+  if (!graphTypeRadioGroup) {
+    graphTypeRadioGroup = createRadio('graph-type');
+    graphTypeRadioGroup.class('radio-group');
+    appendElementToDOMContainer(graphTypeRadioGroup, 'graph_type_container');
+  }
+
   populateGraphTypeRadios(graphTypeRadioGroup);
 }
 
@@ -57,16 +138,10 @@ function showLocationName(locationName) {
 }
 
 /**
- * @param {number} startYear
- * @param {number} endYear
+ * @param {CountData} birdData
  */
-function showYearSpan(startYear, endYear) {
-  const startId = 'start_year';
-  const endId = 'end_year';
-
-  const startYearElement = absolutelyGetElementById(startId);
-  const endYearElement = absolutelyGetElementById(endId);
-
-  startYearElement.innerText = startYear.toString();
-  endYearElement.innerText = endYear.toString();
+function renderFilterUI(birdData) {
+  renderBirdSelect(birdData);
+  renderYearInputs();
+  renderGraphTypeRadios();
 }

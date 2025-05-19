@@ -7,6 +7,14 @@
 
     <title>CBC-by-species Explorer</title>
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- The website stylesheet -->
     <link rel="stylesheet" href="/public/css/style.css" />
 
@@ -20,36 +28,63 @@
     <script src="/public/src/script.js" defer></script>
   </head>
 
-  <body>
-    <header>
-      <h1>Christmas Bird Count</h1>
-      <h2 id="location_name"></h2>
-      <h3 id="year_span">
-        <span id="start_year"></span>&ndash;<span id="end_year"></span>
-      </h3>
+  <body class="container">
+    <header class="header">
+      <h1 class="title">
+        <span> Christmas Bird Count</span>
+        <span class="location-name-heading" id="location_name"></span>
+      </h1>
     </header>
 
-    <main>
-      <ul class="filters">
-        <li id="species_select_container"></li>
-        <li id="start_year_select_container"></li>
-        <li id="end_year_select_container"></li>
-        <li id="graph_type_container"></li>
-      </ul>
-    </main>
+    <main class="potato">
+      <section class="filter-sidebar">
+        <div class="filters-wrapper">
+          <fieldset>
+            <legend>Bird species</legend>
+            <div class="input-target" id="search_input_wrapper"></div>
+            <div class="input-target" id="species_select_container"></div>
+          </fieldset>
 
-    <!-- The footer holds our remix button — you can keep or delete it ✂ -->
-    <footer class="footer">
-      <a
-        target="_blank"
-        href="https://glitch.com/edit/#!/remix/max-cbc-by-species-explorer"
-      >
-        <img
-          src="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2FLogo_Color.svg?v=1618199565140"
-          alt=""
-        />
-        Remix on Glitch
-      </a>
-    </footer>
+          <fieldset>
+            <legend>Year range</legend>
+            <div
+              class="year-input-wrapper input-target"
+              id="start_year_select_container"
+            ></div>
+            <div
+              class="year-input-wrapper input-target"
+              id="end_year_select_container"
+            ></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Graph type</legend>
+            <div
+              class="input-target graph-type-input-wrapper"
+              id="graph_type_container"
+            >
+              <!-- An internal div.radio-group will render inside here  -->
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="remix-wrapper">
+          <a
+            class="glitch-remix-button"
+            target="_blank"
+            href="https://glitch.com/edit/#!/remix/max-cbc-by-species-explorer"
+          >
+            <img
+              src="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2FLogo_Color.svg?v=1618199565140"
+              alt=""
+            />
+            Remix on Glitch
+          </a>
+        </div>
+      </section>
+      <section class="canvas-wrapper">
+        <canvas id="p5_canvas_target"></canvas>
+      </section>
+    </main>
   </body>
 </html>
