@@ -103,7 +103,7 @@ function setup() {
   const { width: rectWidth, height: rectHeight } =
     wrapper.getBoundingClientRect();
 
-  createCanvas(rectWidth, rectHeight, canvasElement);
+  createCanvas(rectWidth - 32, rectHeight - 32, canvasElement);
 }
 
 function draw() {
